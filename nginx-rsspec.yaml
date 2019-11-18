@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: myreplicaset
+  labels:
+    replicasetlabel: samplereplicaset
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+       app: nginx-app
+    matchExpressions:
+      - {key: tier, operator: In, values: [front-end, web-app]}
+  template:
+    metadata:
+      labels:
+        app: nginx-app
+        tier: front-end
+        tier: web-app
+      name: nginx-pod
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx
+        ports:
+        - containerPort: 80

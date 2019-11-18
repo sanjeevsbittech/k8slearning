@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mylbservice
+  labels:
+    service-type: LoadBalancer
+spec:
+  type: LoadBalancer
+  selector:
+       app: nginx-app
+  ports:
+  - nodePort: 31000
+    port: 80
+    targetPort: 80

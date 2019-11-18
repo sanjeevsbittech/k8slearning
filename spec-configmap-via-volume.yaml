@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+   name: myconfigmapviavolume
+spec:
+ containers:
+# - image: nginx
+ - image: redis
+   name: redis-container
+   volumeMounts:
+   - name: configviavolume
+     mountPath: /redis-master
+ volumes:
+# name of the configmap created before it's consumption in this pod spec
+ - name: configviavolume
+   configMap:
+     name: redis-config-map
+     items:
+#this configmap contains two items, 
+#1. key is the name of the file having configuration data which was used while creating configmap
+#2 path is the target location  where config data will be present inside the pod
+     - key: redis-config
+       path: redis.conf
